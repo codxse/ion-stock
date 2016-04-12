@@ -39,18 +39,22 @@ angular.module('starter.controllers', [])
       $scope.closeLogin();
     }, 1000);
   };
+  console.log("AppCtrl");
 })
 
 .controller('PlaylistsCtrl', function($scope) {
   $scope.playlists = [
-    { title: 'Reggae', id: 1 },
+    { title: 'Ekonomi', id: 1 },
     { title: 'Chill', id: 2 },
     { title: 'Dubstep', id: 3 },
     { title: 'Indie', id: 4 },
     { title: 'Rap', id: 5 },
     { title: 'Cowbell', id: 6 }
   ];
+  console.log("playlistCtrl");
 })
 
 .controller('PlaylistCtrl', function($scope, $stateParams) {
+  $scope.playlistId = $stateParams.playlistId;
+  console.log("playlistsCtrl: " + $scope.playlistId);
 });
