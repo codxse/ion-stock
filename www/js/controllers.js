@@ -1,4 +1,4 @@
-angular.module('starter.controllers', [])
+angular.module('ionStock.controllers', [])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
 
@@ -42,7 +42,7 @@ angular.module('starter.controllers', [])
   console.log("AppCtrl");
 })
 
-.controller('PlaylistsCtrl', function($scope) {
+.controller('MyStocksCtrl', function($scope) {
   $scope.playlists = [
     { title: 'Ekonomi', id: 1 },
     { title: 'Chill', id: 2 },
@@ -51,10 +51,10 @@ angular.module('starter.controllers', [])
     { title: 'Rap', id: 5 },
     { title: 'Cowbell', id: 6 }
   ];
-  console.log("playlistCtrl");
+  console.log("MyStocksCtrl");
 })
 
-.controller('PlaylistCtrl', function($scope, $stateParams) {
+.controller('StockCtrl', function($scope, $stateParams) {
   $scope.playlistId = $stateParams.playlistId;
-  console.log("playlistsCtrl: " + $scope.playlistId);
+  console.log("StockCtrl: " + $scope.playlistId);
 });
