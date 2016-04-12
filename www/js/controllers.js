@@ -42,19 +42,27 @@ angular.module('ionStock.controllers', [])
   console.log("AppCtrl");
 })
 
-.controller('MyStocksCtrl', function($scope) {
-  $scope.playlists = [
-    { title: 'Ekonomi', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
-  ];
-  console.log("MyStocksCtrl");
-})
+.controller('MyStocksCtrl', ['$scope',
+  function($scope) {
+    $scope.myStockArray = [
+      {ticker: "AAPL"},
+      {ticker: "GPRO"},
+      {ticker: "FB"},
+      {ticker: "NFLX"},
+      {ticker: "TSLA"},
+      {ticker: "BRK-A"},
+      {ticker: "INTC"},
+      {ticker: "MSFT"},
+      {ticker: "GE"},
+      {ticker: "BAC"},
+      {ticker: "C"},
+      {ticker: "T"}
+    ];
+  }]
+)
 
-.controller('StockCtrl', function($scope, $stateParams) {
-  $scope.playlistId = $stateParams.playlistId;
-  console.log("StockCtrl: " + $scope.playlistId);
-});
+.controller('StockCtrl', ['$scope', '$stateParams',
+  function($scope, $stateParams) {
+    $scope.ticker = $stateParams.stockTicker;
+  }
+]);
