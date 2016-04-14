@@ -62,18 +62,27 @@ angular.module('ionStock.controllers', [])
   }]
 )
 
-.controller('StockCtrl', ['$scope', '$stateParams', '$http', 'stockDataService',
-  function($scope, $stateParams, $http, stockDataService) {
+.controller('StockCtrl', ['$scope', '$stateParams', 'stockDataService',
+  function($scope, $stateParams, stockDataService) {
     $scope.ticker = $stateParams.stockTicker;
 
-    // $http.get("http://finance.yahoo.com/webservice/v1/symbols/YHOO /quote?format=json&view=detail")
-    // .then(function(jsonData) {
-    //   console.log(jsonData.data.list.resources[0].resource.fields);
-    // });
-
-    var promise = stockDataService.getPriceData($scope.ticker);
-    promise.then(function(data) {
-      console.log(data);
+    $scope.$on("$ionicView.afterEnter", function() {
+      getPriceData();
+      getDetailsData();
     });
+
+    function getPriceData() {
+      var promise = stockDataService.getPriceData($scope.ticker);
+      promise.then(function(data) {
+        console.log(data);
+      });
+    }
+
+    function getDetailsData() {
+      var promise = stockDataService.getDetailsData($scope.ticker);
+      promise.then(function(data) {
+        console.log(data);
+      });
+    }
   }
 ]);
