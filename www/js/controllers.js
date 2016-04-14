@@ -45,6 +45,7 @@ angular.module('ionStock.controllers', [])
 .controller('MyStocksCtrl', ['$scope',
   function($scope) {
     $scope.myStockArray = [
+      {ticker: "YHOO"},
       {ticker: "AAPL"},
       {ticker: "GPRO"},
       {ticker: "FB"},
@@ -61,20 +62,18 @@ angular.module('ionStock.controllers', [])
   }]
 )
 
-.controller('StockCtrl', ['$scope', '$stateParams', '$http',
-  function($scope, $stateParams, $http) {
+.controller('StockCtrl', ['$scope', '$stateParams', '$http', 'stockDataService',
+  function($scope, $stateParams, $http, stockDataService) {
+    $scope.ticker = $stateParams.stockTicker;
 
-    // http://finance.yahoo.com/webservice/v1/symbols/YHOO /quote?format=json&view=detail
-
-    $http.get("http://finance.yahoo.com/webservice/v1/symbols/YHOO /quote?format=json&view=detail")
-    .then(function(jsonData) {
-      console.log(jsonData.data.list.resources[0].resource.fields);
-    });
-
-    // $scope.ticker = $stateParams.stockTicker;
-    // var promise = stockDataService.getPriceData($scope.ticker);
-    // promise.then(function(data) {
-    //   console.log(data);
+    // $http.get("http://finance.yahoo.com/webservice/v1/symbols/YHOO /quote?format=json&view=detail")
+    // .then(function(jsonData) {
+    //   console.log(jsonData.data.list.resources[0].resource.fields);
     // });
+
+    var promise = stockDataService.getPriceData($scope.ticker);
+    promise.then(function(data) {
+      console.log(data);
+    });
   }
 ]);
