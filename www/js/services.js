@@ -23,7 +23,7 @@ angular.module('ionStock.services', [])
   var getPriceData = function(ticker) {
 
     var deffered = $q.defer(),
-    url = "http://finance.yahoo.com/webservice/v1/symbols/" + ticker + " /quote?format=json&view=detail";
+    url = "http://finance.yahoo.com/webservice/v1/symbols/" + ticker + "/quote?format=json&view=detail";
 
     console.log(ticker);
 
