@@ -14,10 +14,14 @@ angular.module('ionStock.services', [])
 
 .factory('dateService', function($filter) {
   var currentDate = function() {
-
+    var d = new Date();
+    var date = $filter('date')(d, 'yyyy-MM-dd');
+    return date;
   };
   var oneYearAgoDate = function() {
-
+    var d = new Date(new Date().setDate(new Date().getDate() - 365));
+    var date = $filter('date')(d, 'yyyy-MM-dd');
+    return date;
   };
   return {
     currentDate: currentDate,
