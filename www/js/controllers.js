@@ -62,7 +62,10 @@ angular.module('ionStock.controllers', [])
   }]
 )
 
-.controller('StockCtrl', ['$scope', '$stateParams', 'stockDataService', 'dateService',
+.controller('StockCtrl', ['$scope',
+                          '$stateParams',
+                          'stockDataService',
+                          'dateService',
   function($scope, $stateParams, stockDataService, dateService) {
     $scope.ticker = $stateParams.stockTicker;
     $scope.chartView = 1;
