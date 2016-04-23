@@ -90,6 +90,17 @@ angular.module('ionStock.controllers', [])
     function getPriceData() {
       var promise = stockDataService.getPriceData($scope.ticker);
       promise.then(function(data) {
+
+        if (data.chg_percent >= 0 && data != null) {
+          $scope.reactiveColor = {
+            'background-color': '#33d5f'
+          }
+        } else if (data.chg_percent < 0 && data != null) {
+          $scope.reactiveColor = {
+            'background-color': '#ef43a'
+          }
+        }
+
         console.log(data);
         $scope.stockPriceData = data;
       });
@@ -156,7 +167,7 @@ angular.module('ionStock.controllers', [])
     $scope.chartOptions = {
       chartType: 'linePlusBarWithFocusChart',
       data: 'myData',
-      margin: {top: 15, right: 40, bottom: marginBottom, left: 70},
+      margin: {top: 15, right: 0, bottom: marginBottom, left: 0},
       interpolate: "cardinal",
       useInteractiveGuideline: false,
       yShowMaxMin: false,
@@ -171,7 +182,9 @@ angular.module('ionStock.controllers', [])
       y2AxisTickFormat: y2TickFormat,
       y3AxisTickFormat: y3TickFormat,
       y4AxisTickFormat: y4TickFormat,
-      transitionDuration: 500
+      transitionDuration: 500,
+      y1AxisLabel: 'Price',
+      y3AxisLabel: 'Volume'
     };
 
   }
