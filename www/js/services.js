@@ -75,4 +75,63 @@ angular.module('ionStock.services', [])
     getPriceData: getPriceData,
     getDetailsData: getDetailsData
   };
+})
+
+.factory('chartDataService', function($q, $http, encodeURIService) {
+
+  var getHistoricalData = function(ticker, fromDate, todayDate) {
+    var deferred = $q.defer(),
+    query = 'select * from yahoo.finance.historicaldata where symbol = "' + ticker + '" and startDate = "' + fromDate + '" and endDate = "' + todayDate + '"';
+    url = 'http://query.yahooapis.com/v1/public/yql?q=' + encodeURIService.encode(query) + '&format=json&env=http://datatables.org/alltables.env';
+
+    $http.get(url)
+      .success(function(json) {
+        console.log(json);
+        var jsonData = json.query.results.quote,
+        priceData = [],
+        volumeData = [];
+
+        jsonData.forEach(function(dayDataObject) {
+          //console.log(dayDataObject);
+          dateToMillis = dayDataObject.Date,
+          date = Date.parse(dateToMillis),
+          price = parseFloat(Math.round(dayDataObject.Close * 100) / 100).toFixed(3),
+          volume = dayDataObject.Volume,
+          volumeDatum = '[' + date + ',' + volume + ']',
+          priceDatum = '[' + date + ',' + price + ']';
+
+          // console.log(volumeDatum, priceDatum);
+
+          volumeData.unshift(volumeDatum);
+          priceData.unshift(priceDatum);
+
+        });
+
+        var formattedChartData =
+        '[{' +
+        '"key":' + '"volume",' +
+        '"bar":' + 'true,' +
+        '"values":' + '[' + volumeData + ']' +
+        '},' +
+        '{' +
+        '"key":' + '"' + ticker + '",' +
+        '"values":' + '[' + priceData + ']' +
+        '}]';
+
+        // console.log(formattedChartData);
+
+        deffered.resolve(formattedChartData);
+      })
+      .error(function(error) {
+        console.log("Chart Data Error: " + error);
+        deffered.reject();
+      });
+
+    return deffered.promise;
+  }
+
+  return {
+    getHistoricalData: getHistoricalData
+  }
+
 });
